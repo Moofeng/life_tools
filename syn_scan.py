@@ -42,7 +42,7 @@ USER_IP = get_ip()
 def send_syn():
     while not ip_queue.empty():
         ip = ip_queue.get()
-        print(ip)
+        print("[+] 正在扫描 {}...".format(ip))
         send(IP(dst=ip)/TCP(dport=PORT, sport=RandShort(), flags=2), verbose=False)
 
 # 回调函数
@@ -52,9 +52,9 @@ def prn(pkt):
     if src_ip not in ip_list:
         return
     if flag == "SA":
-        print(pkt.sprintf("%IP.src%:%IP.sport%  is open!!!"))
+        print(pkt.sprintf("[+] %IP.src%:%IP.sport%  开放!!!"))
     else:
-        print(pkt.sprintf("%IP.src%:%IP.sport%  is closed.\tflag: {}".format(flag)))
+        print(pkt.sprintf("[+] %IP.src%:%IP.sport%  关闭.\tflag: {}".format(flag)))
 
 # tcpdump语法过滤数据包
 def sniffer():
